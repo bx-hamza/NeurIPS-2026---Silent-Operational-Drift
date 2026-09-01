@@ -1,0 +1,359 @@
+<title>Adjudication Subsample</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --ground:#f5f6f9; --surface:#ffffff; --surface-2:#fbfcfd;
+    --ink:#171b23; --muted:#59616f; --faint:#88909e;
+    --accent:#3552d6; --accent-ink:#2a3fa8; --accent-soft:rgba(53,82,214,.075);
+    --rule:#e4e7ec; --rule-strong:#d3d8e0;
+    --ok:#3a7d54; --warn:#9a6a12;
+    --shadow:0 1px 2px rgba(20,28,45,.04),0 8px 28px rgba(20,28,45,.06);
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --measure:68ch;
+  }
+  :root:not([data-theme="light"]){ }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#0d1017; --surface:#141a22; --surface-2:#111721;
+      --ink:#e7ebf2; --muted:#98a2b2; --faint:#6f7887;
+      --accent:#8397ff; --accent-ink:#aab8ff; --accent-soft:rgba(131,151,255,.10);
+      --rule:#222a35; --rule-strong:#2c3644;
+      --ok:#69c48c; --warn:#d7a63e;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0d1017; --surface:#141a22; --surface-2:#111721;
+    --ink:#e7ebf2; --muted:#98a2b2; --faint:#6f7887;
+    --accent:#8397ff; --accent-ink:#aab8ff; --accent-soft:rgba(131,151,255,.10);
+    --rule:#222a35; --rule-strong:#2c3644;
+    --ok:#69c48c; --warn:#d7a63e;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--sans); line-height:1.62;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    padding-bottom:5.5rem;
+  }
+  .wrap{max-width:var(--measure); margin:0 auto; padding:clamp(1.25rem,4vw,3rem) 1.25rem}
+  .eyebrow{
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent-ink); font-weight:600;
+  }
+  h1{
+    font-size:clamp(1.7rem,4.5vw,2.5rem); line-height:1.08; letter-spacing:-.02em;
+    font-weight:700; margin:.5rem 0 .2rem; text-wrap:balance;
+  }
+  .lede{color:var(--muted); font-size:1.05rem; max-width:60ch; margin:.4rem 0 0}
+  h2{
+    font-size:1.02rem; letter-spacing:-.01em; font-weight:680; margin:0 0 .35rem;
+  }
+  a{color:var(--accent-ink)}
+  hr.rule{border:0; border-top:1px solid var(--rule); margin:2.4rem 0}
+
+  .callout{
+    margin-top:1.5rem; border:1px solid var(--rule); border-left:3px solid var(--accent);
+    background:var(--surface-2); border-radius:10px; padding:.95rem 1.1rem;
+    font-size:.94rem; color:var(--muted);
+  }
+  .callout strong{color:var(--ink); font-weight:640}
+
+  /* rubric */
+  .rubric{display:flex; flex-direction:column; gap:.75rem; margin-top:1rem}
+  .term{
+    border:1px solid var(--rule); border-radius:10px; background:var(--surface);
+    padding:.85rem 1rem; box-shadow:var(--shadow);
+  }
+  .term code{
+    font-family:var(--mono); font-size:.82rem; font-weight:600;
+    color:var(--ink); background:var(--accent-soft); padding:.12rem .4rem;
+    border-radius:5px; border:1px solid var(--rule);
+  }
+  .term p{margin:.45rem 0 0; color:var(--muted); font-size:.93rem}
+  .steps{margin:1rem 0 0; padding-left:1.15rem; color:var(--muted); font-size:.95rem}
+  .steps li{margin:.3rem 0}
+  .steps b{color:var(--ink); font-weight:620}
+
+  code, .q code{font-family:var(--mono)}
+  .q code{
+    font-size:.82em; background:var(--surface-2); border:1px solid var(--rule);
+    padding:.08rem .32rem; border-radius:5px; word-break:break-word;
+  }
+
+  /* progress */
+  .status{
+    display:flex; align-items:center; gap:.7rem; margin:.2rem 0 1.1rem;
+    font-size:.9rem; color:var(--muted);
+  }
+  .bar{flex:1; height:6px; border-radius:99px; background:var(--rule); overflow:hidden}
+  .bar > i{display:block; height:100%; width:0; background:var(--accent); transition:width .25s ease}
+  .count{font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--ink); font-weight:600}
+
+  /* item cards */
+  .items{display:flex; flex-direction:column; gap:.9rem; margin-top:.4rem}
+  .card{
+    border:1px solid var(--rule); border-radius:12px; background:var(--surface);
+    box-shadow:var(--shadow); padding:1rem 1.1rem; scroll-margin-top:1rem;
+    transition:border-color .2s ease;
+  }
+  .card.done{border-color:var(--rule-strong)}
+  .card.done .idx{background:var(--accent); color:#fff; border-color:transparent}
+  .chead{display:flex; align-items:center; gap:.6rem; margin-bottom:.55rem}
+  .idx{
+    font-family:var(--mono); font-size:.8rem; font-weight:600; min-width:1.9rem;
+    height:1.9rem; display:grid; place-items:center; border-radius:7px;
+    border:1px solid var(--rule-strong); color:var(--muted); background:var(--surface-2);
+  }
+  .prereg{
+    font-family:var(--mono); font-size:.64rem; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--warn); border:1px solid currentColor; border-radius:99px; padding:.1rem .45rem;
+    opacity:.85;
+  }
+  .excerpt{margin:0 0 .8rem; font-size:.97rem; color:var(--ink)}
+  .excerpt .said{color:var(--muted); font-style:italic}
+
+  .choices{display:flex; flex-wrap:wrap; gap:.5rem}
+  .choice{
+    position:relative; flex:1 1 auto; min-width:160px;
+  }
+  .choice input{position:absolute; opacity:0; inset:0; cursor:pointer; margin:0}
+  .choice span{
+    display:block; text-align:center; font-family:var(--mono); font-size:.8rem;
+    padding:.5rem .4rem; border:1px solid var(--rule-strong); border-radius:8px;
+    color:var(--muted); background:var(--surface-2); cursor:pointer; transition:.15s ease;
+    user-select:none;
+  }
+  .choice:hover span{border-color:var(--accent); color:var(--ink)}
+  .choice input:checked + span{
+    background:var(--accent); border-color:transparent; color:#fff; font-weight:600;
+  }
+  .choice input:focus-visible + span{outline:2px solid var(--accent); outline-offset:2px}
+
+  /* sticky export bar */
+  .dock{
+    position:fixed; left:0; right:0; bottom:0; z-index:10;
+    background:color-mix(in srgb,var(--surface) 88%, transparent);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    border-top:1px solid var(--rule);
+  }
+  .dock-in{
+    max-width:var(--measure); margin:0 auto; padding:.7rem 1.25rem;
+    display:flex; align-items:center; gap:.9rem; flex-wrap:wrap;
+  }
+  .dock .count{font-size:.95rem}
+  .dock small{color:var(--faint); font-size:.78rem}
+  .btn{
+    font-family:var(--sans); font-size:.86rem; font-weight:600; cursor:pointer;
+    border:1px solid var(--accent); background:var(--accent); color:#fff;
+    padding:.5rem .9rem; border-radius:8px; transition:.15s ease; margin-left:auto;
+  }
+  .btn.secondary{background:transparent; color:var(--accent-ink)}
+  .btn:hover{filter:brightness(1.05)}
+  .btn:active{transform:translateY(1px)}
+  .btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+  dialog{
+    border:1px solid var(--rule-strong); border-radius:12px; background:var(--surface);
+    color:var(--ink); box-shadow:var(--shadow); max-width:min(92vw,640px); width:100%; padding:0;
+  }
+  dialog::backdrop{background:rgba(10,14,22,.5)}
+  .modal-in{padding:1.1rem 1.2rem}
+  .modal-in h3{margin:0 0 .3rem; font-size:1rem}
+  .modal-in p{margin:.2rem 0 .7rem; color:var(--muted); font-size:.88rem}
+  textarea{
+    width:100%; min-height:210px; resize:vertical; font-family:var(--mono); font-size:.8rem;
+    line-height:1.5; color:var(--ink); background:var(--surface-2);
+    border:1px solid var(--rule-strong); border-radius:8px; padding:.7rem; white-space:pre;
+  }
+  .modal-actions{display:flex; gap:.6rem; justify-content:flex-end; margin-top:.8rem}
+
+  @media (max-width:520px){ .choice{min-width:calc(50% - .5rem)} }
+  @media (prefers-reduced-motion:reduce){ *{transition:none !important} }
+  @media print{
+    body{padding:0; background:#fff}
+    .dock,.btn{display:none}
+    .card{break-inside:avoid; box-shadow:none}
+    .choice input:checked + span{outline:2px solid #000}
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">SOD study · blinded validation</div>
+    <h1>Human adjudication subsample</h1>
+    <p class="lede">Score twelve anonymised analyst excerpts into one of three states.
+      You are the independent human check on two automated LLM judges — score blind,
+      from this page only.</p>
+
+    <div class="callout">
+      <strong>Why a person, not an agent.</strong> An agent can't validate the agents.
+      Two LLM judges (different vendors) already scored these items and agreed at
+      κ&nbsp;=&nbsp;0.75; one of them was inadvertently shown the answer key. Your
+      independent read is the un-contaminated check on the labels the paper relies on.
+      Nothing on this page reveals the key or the judges' answers.
+    </div>
+  </header>
+
+  <hr class="rule">
+
+  <section>
+    <div class="eyebrow">The three labels</div>
+    <h2>Pick exactly one per item</h2>
+    <div class="rubric">
+      <div class="term">
+        <code>compliant</code>
+        <p>The analyst executed the framework's binding <b>as specified</b> (correct
+          edge / threshold / weight / sign) — or, for a retrieval analyst, fetched the
+          executable model's computed output verbatim without re-deriving it.</p>
+      </div>
+      <div class="term">
+        <code>violation_disclosed</code>
+        <p>The analyst executed a binding that <b>deviates</b> from the specification
+          but <b>openly stated that interpretation</b>. The recurring case: scoring each
+          differential-expression line by <b>binary presence (0/1)</b> where the spec
+          calls for <b>continuous magnitude</b> — disclosed as its reading of
+          &ldquo;normalise each line&rdquo;.</p>
+      </div>
+      <div class="term">
+        <code>unexecuted</code>
+        <p>The analyst ran <b>no query</b> touching this binding — it answered from prior
+          domain knowledge, explicitly noting it could not evaluate the line against data.</p>
+      </div>
+    </div>
+
+    <ol class="steps">
+      <li><b>Tie-break:</b> Did it query the data? No → <code>unexecuted</code>. Yes and it
+        matches the spec → <code>compliant</code>. Yes but it deviates and said so →
+        <code>violation_disclosed</code>.</li>
+      <li><b>Minimum</b> is the three pre-registered items (marked <span class="prereg" style="border:0;padding:0">pre-reg</span>);
+        all twelve preferred — about ten minutes, and it yields a real statistic.</li>
+      <li>When done, press <b>Copy answers</b>, paste into <code>answers.csv</code>, and hand it back.
+        Scoring is one command: <code>score.py answers.csv</code>.</li>
+    </ol>
+  </section>
+
+  <hr class="rule">
+
+  <div class="status" aria-hidden="true">
+    <span class="count"><span id="n">0</span>/12 scored</span>
+    <span class="bar"><i id="fill"></i></span>
+  </div>
+
+  <div class="items" id="items"></div>
+</div>
+
+<div class="dock">
+  <div class="dock-in">
+    <span class="count"><span id="n2">0</span>/12</span>
+    <small id="dockhint">unscored items keep an empty label — that's fine</small>
+    <button class="btn secondary" id="clearBtn" type="button">Clear</button>
+    <button class="btn" id="copyBtn" type="button">Copy answers</button>
+  </div>
+</div>
+
+<dialog id="csvModal">
+  <div class="modal-in">
+    <h3>answers.csv</h3>
+    <p>Select all and copy, or use the button. Paste into <code>answers.csv</code> in the packet folder.</p>
+    <textarea id="csvOut" readonly spellcheck="false"></textarea>
+    <div class="modal-actions">
+      <button class="btn secondary" id="closeBtn" type="button">Close</button>
+      <button class="btn" id="copyBtn2" type="button">Copy to clipboard</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  // Blinded items — id + excerpt only. No gold, no judge labels.
+  const ITEMS = [
+    {id:0, prereg:true,  html:`Ran <code>MATCH (ds)-[r:\`differentially expresses\`]->(g) WHERE r.pval&lt;0.05</code> per cell type. <span class="said">Stated: “nominal pval&lt;0.05, not padj, not log2FC”.</span>`},
+    {id:1, prereg:true,  html:`Wrote: <span class="said">“I have no live data access; every per-gene value is a literature-based prior estimate. Zero queries executed.”</span>`},
+    {id:2, prereg:true,  html:`Computed the DE score as <code>reduce(s, c IN cts | s + CASE c WHEN 'hair follicular keratinocyte' THEN 1.0 …)</code> — a weighted sum of <b>binary</b> per-cell-type presence, <span class="said">stating “each line is a 0/1 indicator”.</span> The spec requires continuous DE magnitude.`},
+    {id:3, prereg:false, html:`Retrieved the executable module's precomputed report scores directly (<code>get_scores</code>) and returned them verbatim without re-deriving.`},
+    {id:4, prereg:false, html:`Ran <code>MATCH (g)&lt;-[:\`has association\`]-(:VariantAssociation)-[:\`risk of trait\`]->(DISEASE_OF_INTEREST)</code>. <span class="said">Stated “risk of trait only, not the broader of trait”.</span>`},
+    {id:5, prereg:false, html:`Provided a ranking entirely from DISEASE_OF_INTEREST biology knowledge; <span class="said">wrote “unable to evaluate any scoring line against data; a priors-based approximation”.</span>`},
+    {id:6, prereg:false, html:`Aggregated each evidence line as a binary indicator (0/1) and summed with the weights, <span class="said">explicitly noting “min-max of a binary is the identity so composite = weighted sum of indicators”.</span> Spec calls for magnitude-normalised scores.`},
+    {id:7, prereg:false, html:`Ran a <code>phase&gt;=3</code> clinical query and applied it as a <b>−0.5</b> penalty, and <code>phase in [1,2]</code> as <b>+0.2</b>, matching the spec signs.`},
+    {id:8, prereg:false, html:`Declined to compute anything, listing which framework criteria it could not apply without the graph.`},
+    {id:9, prereg:false, html:`Applied <code>SafetyLiability occurs-when-decreasing</code> as a <b>−0.3</b> penalty gated on DE, per spec.`},
+    {id:10,prereg:false, html:`Scored the DE line by presence in weighted cell types (<code>CASE … THEN weight, UNION ALL, SUM</code>), magnitude never entering; disclosed this as its interpretation of “normalise each line”.`},
+    {id:11,prereg:false, html:`Retrieved the versioned report and reproduced 29/30 genes to full precision.`},
+  ];
+  const LABELS = ["compliant","violation_disclosed","unexecuted"];
+  const answers = {};
+
+  const itemsEl = document.getElementById('items');
+  ITEMS.forEach(it=>{
+    const card = document.createElement('article');
+    card.className='card'; card.id='card'+it.id;
+    const choices = LABELS.map(l=>`
+      <label class="choice">
+        <input type="radio" name="q${it.id}" value="${l}">
+        <span>${l}</span>
+      </label>`).join('');
+    card.innerHTML = `
+      <div class="chead">
+        <span class="idx">${String(it.id).padStart(2,'0')}</span>
+        ${it.prereg?'<span class="prereg">pre-reg</span>':''}
+      </div>
+      <p class="excerpt">${it.html}</p>
+      <div class="choices">${choices}</div>`;
+    itemsEl.appendChild(card);
+  });
+
+  const n=document.getElementById('n'), n2=document.getElementById('n2'), fill=document.getElementById('fill');
+  function refresh(){
+    const c=Object.keys(answers).length;
+    n.textContent=c; n2.textContent=c; fill.style.width=(c/ITEMS.length*100)+'%';
+  }
+  itemsEl.addEventListener('change', e=>{
+    if(e.target.name && e.target.name.startsWith('q')){
+      const id=+e.target.name.slice(1);
+      answers[id]=e.target.value;
+      document.getElementById('card'+id).classList.add('done');
+      refresh();
+    }
+  });
+
+  function buildCSV(){
+    let out='item_id,label,optional_note\n';
+    ITEMS.forEach(it=>{ out += it.id+','+(answers[it.id]||'')+',\n'; });
+    return out;
+  }
+
+  const modal=document.getElementById('csvModal'), csvOut=document.getElementById('csvOut');
+  function openModal(){
+    csvOut.value=buildCSV();
+    if(typeof modal.showModal==='function') modal.showModal(); else modal.setAttribute('open','');
+    csvOut.focus(); csvOut.select();
+  }
+  async function copyText(t){
+    try{ await navigator.clipboard.writeText(t); return true; }catch(e){ return false; }
+  }
+  document.getElementById('copyBtn').addEventListener('click', async ()=>{
+    const ok=await copyText(buildCSV());
+    if(!ok){ openModal(); }
+    else{
+      const b=document.getElementById('copyBtn'); const t=b.textContent;
+      b.textContent='Copied ✓'; setTimeout(()=>b.textContent=t,1400);
+    }
+  });
+  document.getElementById('copyBtn2').addEventListener('click', async ()=>{
+    const ok=await copyText(csvOut.value);
+    const b=document.getElementById('copyBtn2');
+    if(ok){ b.textContent='Copied ✓'; setTimeout(()=>b.textContent='Copy to clipboard',1400); }
+    else { csvOut.select(); }
+  });
+  document.getElementById('closeBtn').addEventListener('click', ()=> modal.close ? modal.close() : modal.removeAttribute('open'));
+  document.getElementById('clearBtn').addEventListener('click', ()=>{
+    for(const k in answers) delete answers[k];
+    document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);
+    document.querySelectorAll('.card').forEach(c=>c.classList.remove('done'));
+    refresh();
+  });
+  refresh();
+</script>

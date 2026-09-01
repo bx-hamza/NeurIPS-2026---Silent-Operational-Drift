@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this artifact, please cite the paper."
+title: "Silent Operationalization Drift: Prose Scientific Frameworks are Underdetermined Specifications for Agentic Drug Discovery"
+abstract: >-
+  Measurement instrument and scored results for a pre-registered study of
+  silent operationalization drift in LLM agents executing prose scientific
+  frameworks on a production-scale biomedical knowledge graph.
+authors:
+  - name: "Anonymous (double-blind submission)"
+year: 2026
+# On acceptance: replace the author list with the real one and add the DOI.

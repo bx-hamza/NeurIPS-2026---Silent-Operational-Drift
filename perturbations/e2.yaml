@@ -1,0 +1,31 @@
+# Perturbation set for E2. 20 real + 10 null.
+#
+# Fill target/apply_query against the frozen snapshot. Pick real perturbations
+# by first computing the reference ranking, then choosing edges that support
+# entities at known positions — that is how you get a stratum you can trust
+# instead of one you hope for.
+#
+# The pilot's rank-3-to-244 case belongs here as P001.
+
+snapshot_id: S0_PLACEHOLDER
+
+perturbations:
+  - id: P001
+    kind: delete_edge
+    stratum: high_impact
+    target: {gene: TRAF1, edge: DIFFERENTIALLY_EXPRESSED_IN, cell_type: macrophage}
+    apply_query: |
+      MATCH (g:Gene {symbol:'TRAF1'})-[r:DIFFERENTIALLY_EXPRESSED_IN]->
+            (c:CellType {name:'macrophage'})
+      DELETE r
+    revert_query: |
+      MATCH (g:Gene {symbol:'TRAF1'}), (c:CellType {name:'macrophage'})
+      CREATE (g)-[:DIFFERENTIALLY_EXPRESSED_IN {log2FoldChange: 0.42, padj: 0.013}]->(c)
+    note: reproduces the pilot finding as a controlled datapoint
+
+  - id: P021
+    kind: noop
+    stratum: null_control
+    target: {}
+    note: null control — nothing is changed, agent is asked to re-run anyway
+

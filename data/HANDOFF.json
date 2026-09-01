@@ -1,0 +1,1032 @@
+{
+  "meta": {
+    "prereg_hash": "94c5a67f3e15dbad0d60257f341c9b272af254bb",
+    "snapshot_id": "the pinned substrate snapshot baseline (apply/revert perturbations; no formal S0 dump)",
+    "gateway_version": "the data gateway (a federated query layer) @ the pinned substrate snapshot",
+    "run_window": {
+      "start": "2026-08-17",
+      "end": "2026-08-17"
+    },
+    "models": [
+      {
+        "id": "claude (Claude Code sub-agents)",
+        "family": "Anthropic",
+        "thinking": "default"
+      },
+      {
+        "id": "gemini-2.5-flash",
+        "family": "Google",
+        "thinking": "none"
+      },
+      {
+        "id": "deepseek-v4-pro",
+        "family": "DeepSeek",
+        "thinking": "reasoning"
+      }
+    ],
+    "arms_run": [
+      "A1",
+      "A2",
+      "A3",
+      "A4"
+    ],
+    "sessions_completed": 52,
+    "sessions_failed": 3,
+    "deviations_from_prereg": [
+      "Exploratory pilot ran before freeze; frozen artifacts refined from it (P08 plausible-wrong, arm_cli truncation, classifier).",
+      "Second model family (gemini-2.5-flash) added; frozen instrument reused unchanged, only the arm executor is new (deviations_from_prereg.md #9). Flash is a weaker tier: the executable arm (A4) replicates model-invariantly, but the sharp compliant-yet-divergent Claude finding is tier-dependent \u2014 Flash A3 is only ~0.77 fidelity.",
+      "Third model family (deepseek-v4-pro, a capable reasoning model) added; same frozen instrument. This is the capable-tier cross-vendor test Flash could not provide: it CONFIRMS the sharp finding \u2014 A3 fully compliant (OF 1.0) yet portfolio-disjoint from A4 (top-10 Jaccard ~0.05), compare_arms(A4,A3) CI spans zero \u2014 exactly matching Claude. See deviations_from_prereg.md #10.",
+      "E2 FULL behavioural DSSM study now run (deepseek-v4-pro): 14 real + 10 null perturbations on the differentially-expresses pval edge, reversible via cypher-shell, all 24 reverts verified. A3 (live) detection 14/14, false-drift 0/10, Fisher p=5.1e-7; A4 (precomputed report) stale 14/14, detection 0/14. Reference = the reproducible per-line composite (harness/e2_reference.py), NOT the platform composite (which is not reproducible). Perturbation set re-authored on the pinned substrate snapshot (the old draft targeted the upregulates edge the framework never reads).",
+      "prereg-v1 scoped to E1; E2 artifacts (e2_reference.py composite + re-authored perturbations/e2.yaml) built post-freeze for the behavioural study and documented here (not silently frozen).",
+      "Port-forward outage mid-E5v2 caused 3 arm failures; re-run clean."
+    ]
+  },
+  "e1_fidelity": {
+    "by_arm": {
+      "A1": {
+        "of": {
+          "point": null,
+          "lo": null,
+          "hi": null,
+          "n": 30,
+          "note": "undefined (all unexecuted)"
+        },
+        "svr": null,
+        "unexecuted_rate": {
+          "point": 1.0,
+          "lo": 1.0,
+          "hi": 1.0,
+          "n": 30
+        },
+        "state_counts": {
+          "compliant": 0,
+          "violation_disclosed": 0,
+          "violation_silent": 0,
+          "violation_narrated_compliant": 0,
+          "unexecuted": 30
+        }
+      },
+      "A2": {
+        "of": {
+          "point": 1.0,
+          "lo": 1.0,
+          "hi": 1.0,
+          "n": 30
+        },
+        "svr": null,
+        "unexecuted_rate": {
+          "point": 0.0,
+          "lo": 0.0,
+          "hi": 0.0,
+          "n": 30
+        },
+        "state_counts": {
+          "compliant": 30,
+          "violation_disclosed": 0,
+          "violation_silent": 0,
+          "violation_narrated_compliant": 0,
+          "unexecuted": 0
+        }
+      },
+      "A3": {
+        "of": {
+          "point": 1.0,
+          "lo": 1.0,
+          "hi": 1.0,
+          "n": 30
+        },
+        "svr": null,
+        "unexecuted_rate": {
+          "point": 0.0333,
+          "lo": 0.0,
+          "hi": 0.1,
+          "n": 30
+        },
+        "state_counts": {
+          "compliant": 29,
+          "violation_disclosed": 0,
+          "violation_silent": 0,
+          "violation_narrated_compliant": 0,
+          "unexecuted": 1
+        }
+      },
+      "A4": {
+        "of": {
+          "point": 1.0,
+          "lo": 1.0,
+          "hi": 1.0,
+          "n": 30
+        },
+        "svr": null,
+        "unexecuted_rate": {
+          "point": 0.0,
+          "lo": 0.0,
+          "hi": 0.0,
+          "n": 30
+        },
+        "state_counts": {
+          "compliant": 30,
+          "violation_disclosed": 0,
+          "violation_silent": 0,
+          "violation_narrated_compliant": 0,
+          "unexecuted": 0
+        }
+      }
+    },
+    "by_arm_model": {
+      "claude": {
+        "by_arm": {
+          "A1": {
+            "of": {
+              "point": null,
+              "lo": null,
+              "hi": null,
+              "n": 30,
+              "note": "undefined (all unexecuted)"
+            },
+            "unexecuted_rate": {
+              "point": 1.0,
+              "lo": 1.0,
+              "hi": 1.0,
+              "n": 30
+            },
+            "seeds_scored": [
+              "s1",
+              "s2",
+              "s3"
+            ],
+            "state_counts": {
+              "compliant": 0,
+              "violation_disclosed": 0,
+              "violation_silent": 0,
+              "violation_narrated_compliant": 0,
+              "unexecuted": 30
+            }
+          },
+          "A2": {
+            "of": {
+              "point": 1.0,
+              "lo": 1.0,
+              "hi": 1.0,
+              "n": 30
+            },
+            "unexecuted_rate": {
+              "point": 0.0,
+              "lo": 0.0,
+              "hi": 0.0,
+              "n": 30
+            },
+            "seeds_scored": [
+              "s1",
+              "s2",
+              "s3"
+            ],
+            "state_counts": {
+              "compliant": 30,
+              "violation_disclosed": 0,
+              "violation_silent": 0,
+              "violation_narrated_compliant": 0,
+              "unexecuted": 0
+            }
+          },
+          "A3": {
+            "of": {
+              "point": 1.0,
+              "lo": 1.0,
+              "hi": 1.0,
+              "n": 30
+            },
+            "unexecuted_rate": {
+              "point": 0.0333,
+              "lo": 0.0,
+              "hi": 0.1,
+              "n": 30
+            },
+            "seeds_scored": [
+              "s1",
+              "s2",
+              "s3"
+            ],
+            "state_counts": {
+              "compliant": 29,
+              "violation_disclosed": 0,
+              "violation_silent": 0,
+              "violation_narrated_compliant": 0,
+              "unexecuted": 1
+            }
+          },
+          "A4": {
+            "of": {
+              "point": 1.0,
+              "lo": 1.0,
+              "hi": 1.0,
+              "n": 30
+            },
+            "unexecuted_rate": {
+              "point": 0.0,
+              "lo": 0.0,
+              "hi": 0.0,
+              "n": 30
+            },
+            "seeds_scored": [
+              "s1",
+              "s2",
+              "s3"
+            ],
+            "state_counts": {
+              "compliant": 30,
+              "violation_disclosed": 0,
+              "violation_silent": 0,
+              "violation_narrated_compliant": 0,
+              "unexecuted": 0
+            }
+          }
+        },
+        "seeds_failed": {},
+        "a3_vs_a4": {
+          "of_difference": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "excludes_zero": false
+        },
+        "decision_divergence_top10_jaccard_vs_A4": {
+          "A1": [
+            0.176,
+            0.25,
+            0.25
+          ],
+          "A2": [
+            0.053,
+            0.053,
+            0.053
+          ],
+          "A3": [
+            0.053,
+            0.053,
+            0.053
+          ]
+        },
+        "self_stability_top10_jaccard": {
+          "A1": 0.495,
+          "A2": 1.0,
+          "A3": 1.0,
+          "A4": 1.0
+        }
+      },
+      "gemini-2.5-flash": {
+        "by_arm": {
+          "A1": {
+            "of": {
+              "point": null,
+              "lo": null,
+              "hi": null,
+              "n": 30,
+              "note": "undefined (all unexecuted)"
+            },
+            "unexecuted_rate": {
+              "point": 1.0,
+              "lo": 1.0,
+              "hi": 1.0,
+              "n": 30
+            },
+            "seeds_scored": [
+              "s1",
+              "s2",
+              "s3"
+            ],
+            "state_counts": {
+              "compliant": 0,
+              "violation_disclosed": 0,
+              "violation_silent": 0,
+              "violation_narrated_compliant": 0,
+              "unexecuted": 30
+            }
+          },
+          "A2": {
+            "of": {
+              "point": 0.9444,
+              "lo": 0.875,
+              "hi": 1.0,
+              "n": 30
+            },
+            "unexecuted_rate": {
+              "point": 0.4,
+              "lo": 0.0,
+              "hi": 1.0,
+              "n": 30
+            },
+            "seeds_scored": [
+              "s1",
+              "s2",
+              "s3"
+            ],
+            "state_counts": {
+              "compliant": 17,
+              "violation_disclosed": 0,
+              "violation_silent": 1,
+              "violation_narrated_compliant": 0,
+              "unexecuted": 12
+            }
+          },
+          "A3": {
+            "of": {
+              "point": 0.7727,
+              "lo": 0.7143,
+              "hi": 0.875,
+              "n": 30
+            },
+            "unexecuted_rate": {
+              "point": 0.2667,
+              "lo": 0.2,
+              "hi": 0.3,
+              "n": 30
+            },
+            "seeds_scored": [
+              "s1",
+              "s2",
+              "s3"
+            ],
+            "state_counts": {
+              "compliant": 17,
+              "violation_disclosed": 1,
+              "violation_silent": 4,
+              "violation_narrated_compliant": 0,
+              "unexecuted": 8
+            }
+          },
+          "A4": {
+            "of": {
+              "point": 1.0,
+              "lo": 1.0,
+              "hi": 1.0,
+              "n": 30
+            },
+            "unexecuted_rate": {
+              "point": 0.0,
+              "lo": 0.0,
+              "hi": 0.0,
+              "n": 30
+            },
+            "seeds_scored": [
+              "s1",
+              "s2",
+              "s3"
+            ],
+            "state_counts": {
+              "compliant": 30,
+              "violation_disclosed": 0,
+              "violation_silent": 0,
+              "violation_narrated_compliant": 0,
+              "unexecuted": 0
+            }
+          }
+        },
+        "seeds_failed": {},
+        "a3_vs_a4": {
+          "of_difference": 0.2273,
+          "ci95": [
+            0.125,
+            0.2857
+          ],
+          "excludes_zero": true
+        },
+        "decision_divergence_top10_jaccard_vs_A4": {
+          "A1": [
+            0.0,
+            0.0,
+            0.053
+          ],
+          "A2": [
+            0.111,
+            0.0,
+            0.0
+          ],
+          "A3": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "self_stability_top10_jaccard": {
+          "A1": 0.207,
+          "A2": 0.018,
+          "A3": 0.0,
+          "A4": 1.0
+        }
+      },
+      "deepseek-v4-pro": {
+        "by_arm": {
+          "A1": {
+            "of": {
+              "point": null,
+              "lo": null,
+              "hi": null,
+              "n": 30,
+              "note": "undefined (all unexecuted)"
+            },
+            "unexecuted_rate": {
+              "point": 1.0,
+              "lo": 1.0,
+              "hi": 1.0,
+              "n": 30
+            },
+            "seeds_scored": [
+              "s1",
+              "s2",
+              "s3"
+            ],
+            "state_counts": {
+              "compliant": 0,
+              "violation_disclosed": 0,
+              "violation_silent": 0,
+              "violation_narrated_compliant": 0,
+              "unexecuted": 30
+            }
+          },
+          "A2": {
+            "of": {
+              "point": 1.0,
+              "lo": 1.0,
+              "hi": 1.0,
+              "n": 30
+            },
+            "unexecuted_rate": {
+              "point": 0.1333,
+              "lo": 0.0,
+              "hi": 0.3,
+              "n": 30
+            },
+            "seeds_scored": [
+              "s1",
+              "s2",
+              "s3"
+            ],
+            "state_counts": {
+              "compliant": 26,
+              "violation_disclosed": 0,
+              "violation_silent": 0,
+              "violation_narrated_compliant": 0,
+              "unexecuted": 4
+            }
+          },
+          "A3": {
+            "of": {
+              "point": 0.8667,
+              "lo": 0.7,
+              "hi": 1.0,
+              "n": 30
+            },
+            "unexecuted_rate": {
+              "point": 0.0,
+              "lo": 0.0,
+              "hi": 0.0,
+              "n": 30
+            },
+            "seeds_scored": [
+              "s1",
+              "s2",
+              "s3"
+            ],
+            "state_counts": {
+              "compliant": 26,
+              "violation_disclosed": 4,
+              "violation_silent": 0,
+              "violation_narrated_compliant": 0,
+              "unexecuted": 0
+            }
+          },
+          "A4": {
+            "of": {
+              "point": 1.0,
+              "lo": 1.0,
+              "hi": 1.0,
+              "n": 30
+            },
+            "unexecuted_rate": {
+              "point": 0.0,
+              "lo": 0.0,
+              "hi": 0.0,
+              "n": 30
+            },
+            "seeds_scored": [
+              "s1",
+              "s2",
+              "s3"
+            ],
+            "state_counts": {
+              "compliant": 30,
+              "violation_disclosed": 0,
+              "violation_silent": 0,
+              "violation_narrated_compliant": 0,
+              "unexecuted": 0
+            }
+          }
+        },
+        "seeds_failed": {},
+        "a3_vs_a4": {
+          "of_difference": 0.1333,
+          "ci95": [
+            0.0,
+            0.3
+          ],
+          "excludes_zero": false
+        },
+        "decision_divergence_top10_jaccard_vs_A4": {
+          "A1": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "A2": [
+            0.053,
+            0.0,
+            0.053
+          ],
+          "A3": [
+            0.053,
+            0.053,
+            1.0
+          ]
+        },
+        "self_stability_top10_jaccard": {
+          "A1": 0.157,
+          "A2": 0.556,
+          "A3": 0.368,
+          "A4": 1.0
+        }
+      }
+    },
+    "per_parameter": {},
+    "unparsed_tool_call_rate": {
+      "A1": 0.0,
+      "A2": 0.0,
+      "A3": 0.0,
+      "A4": 0.0
+    },
+    "discriminating": {
+      "P08_aggregation": true,
+      "note": "P08 (underdetermined aggregation) is the sole discriminator; it drives decision divergence and is dual-judge scored (D7)."
+    },
+    "a3_vs_a4": {
+      "of_difference": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "excludes_zero": false,
+      "PRIMARY_METRIC_note": "OF spans zero BY DESIGN (both arms compliant on extractable bindings). The effect is in DECISION DIVERGENCE (D8): A3-vs-A4 top-10 Jaccard = 0.053 in all 3 seeds."
+    },
+    "decision_divergence_top10_jaccard_vs_A4": {
+      "A1": [
+        0.176,
+        0.25,
+        0.25
+      ],
+      "A2": [
+        0.053,
+        0.053,
+        0.053
+      ],
+      "A3": [
+        0.053,
+        0.053,
+        0.053
+      ]
+    }
+  },
+  "e2_dssm": {
+    "n_real": 14,
+    "n_null": 10,
+    "model": "deepseek-v4-pro",
+    "design_warnings": [],
+    "reference": "Agent-free deterministic per-line composite (harness/e2_reference.py); the platform composite is NOT reproducible (RECONCILIATION.md), so E2 scores whether an arm's answer reflects the exactly-computable evidence DELTA a substrate edit produces, against this reference.",
+    "method": "Full behavioural DSSM. Per perturbation: mutate `differentially expresses` pval via cypher-shell (reversible), A3 LIVE-queries the current pval, A4 reads the precomputed report score (agent-free). Real=push a credited gene above pval<0.05 (14, all 7 cell types, sim displacement 3-237); Null=touch-revert same value or noop (10). Reverts verified 24/24; live reference tracked the mutation 14/14; A4 report score unchanged 14/14.",
+    "by_arm": {
+      "A3": {
+        "detection_rate": {
+          "point": 1.0,
+          "lo": 1.0,
+          "hi": 1.0,
+          "n": 14,
+          "note": "live-query arm detected EVERY real substrate change by re-querying the current pval"
+        },
+        "false_drift_rate": {
+          "point": 0.0,
+          "lo": 0.0,
+          "hi": 0.0,
+          "n": 10,
+          "note": "zero false positives on the null controls (touch-revert + noop)"
+        },
+        "staleness_rate": {
+          "point": 0.0,
+          "lo": 0.0,
+          "hi": 0.0,
+          "n": 14
+        },
+        "fisher": {
+          "odds_ratio": "inf",
+          "p_value": 5.099e-07,
+          "table": [
+            [
+              14,
+              0
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          "note": "detection is far above chance"
+        }
+      },
+      "A4": {
+        "detection_rate": {
+          "point": 0.0,
+          "lo": 0.0,
+          "hi": 0.0,
+          "n": 14,
+          "note": "precomputed-report arm: HAS_SCORE_EDGE is NOT re-derived by a graph edit -> BLIND to every real substrate change"
+        },
+        "false_drift_rate": {
+          "point": 0.0,
+          "lo": 0.0,
+          "hi": 0.0,
+          "n": 10
+        },
+        "staleness_rate": {
+          "point": 1.0,
+          "lo": 1.0,
+          "hi": 1.0,
+          "n": 14,
+          "note": "stale on 14/14: it serves the frozen report; needs a re-run / versioning layer to detect (the A4 vs A4- delta)"
+        },
+        "fisher": {
+          "odds_ratio": null,
+          "p_value": 1.0,
+          "table": [
+            [
+              0,
+              14
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          "note": "never detects; detection NOT above chance"
+        }
+      }
+    }
+  },
+  "e3_stability": {
+    "by_arm": {
+      "A1": {
+        "kendall_tau_mean": 0.446,
+        "top10_jaccard_mean": 0.495,
+        "n_pairs": 3,
+        "scalar_exact_match": {
+          "decision_divergence_vs_A4": {
+            "all_identical": false,
+            "unique_values": {
+              "0.176": 1,
+              "0.25": 2
+            }
+          }
+        }
+      },
+      "A2": {
+        "kendall_tau_mean": 1.0,
+        "top10_jaccard_mean": 1.0,
+        "n_pairs": 3,
+        "scalar_exact_match": {
+          "decision_divergence_vs_A4": {
+            "all_identical": true,
+            "unique_values": {
+              "0.053": 3
+            }
+          }
+        }
+      },
+      "A3": {
+        "kendall_tau_mean": 1.0,
+        "top10_jaccard_mean": 1.0,
+        "n_pairs": 3,
+        "scalar_exact_match": {
+          "decision_divergence_vs_A4": {
+            "all_identical": true,
+            "unique_values": {
+              "0.053": 3
+            }
+          }
+        }
+      },
+      "A4": {
+        "kendall_tau_mean": 1.0,
+        "top10_jaccard_mean": 1.0,
+        "n_pairs": 3,
+        "scalar_exact_match": {
+          "decision_divergence_vs_A4": {
+            "all_identical": true,
+            "unique_values": {}
+          }
+        }
+      }
+    }
+  },
+  "e4_rewalk": {
+    "by_arm": {
+      "A1": {
+        "rrr": {
+          "point": 0.0,
+          "lo": 0.0,
+          "hi": 0.0,
+          "n": 1,
+          "note": "bare 30-symbol list, no provenance -> not reproducible"
+        },
+        "n_attempts": 1
+      },
+      "A2": {
+        "rrr": {
+          "point": 1.0,
+          "lo": 1.0,
+          "hi": 1.0,
+          "n": 1,
+          "note": "exact reproduction (systematic drift)"
+        },
+        "n_attempts": 1
+      },
+      "A3": {
+        "rrr": {
+          "point": 1.0,
+          "lo": 1.0,
+          "hi": 1.0,
+          "n": 1,
+          "note": "exact reproduction (systematic drift)"
+        },
+        "n_attempts": 1
+      },
+      "A4": {
+        "rrr": {
+          "point": 1.0,
+          "lo": 1.0,
+          "hi": 1.0,
+          "n": 1,
+          "note": "versioned report re-fetched; surfaced 1 undocumented curation step"
+        },
+        "n_attempts": 1
+      }
+    }
+  },
+  "e5_abstention": {
+    "by_arm": {
+      "A1": {
+        "abstention_rate": {
+          "point": 1.0,
+          "lo": 1.0,
+          "hi": 1.0,
+          "n": 14
+        },
+        "improvisation_rate": {
+          "point": 0.0,
+          "lo": 0.0,
+          "hi": 0.0,
+          "n": 14
+        }
+      },
+      "A2": {
+        "abstention_rate": {
+          "point": 1.0,
+          "lo": 1.0,
+          "hi": 1.0,
+          "n": 14
+        },
+        "improvisation_rate": {
+          "point": 0.0,
+          "lo": 0.0,
+          "hi": 0.0,
+          "n": 14
+        }
+      },
+      "A3": {
+        "abstention_rate": {
+          "point": 1.0,
+          "lo": 1.0,
+          "hi": 1.0,
+          "n": 14
+        },
+        "improvisation_rate": {
+          "point": 0.0,
+          "lo": 0.0,
+          "hi": 0.0,
+          "n": 14
+        }
+      },
+      "A4": {
+        "abstention_rate": {
+          "point": 1.0,
+          "lo": 1.0,
+          "hi": 1.0,
+          "n": 14
+        },
+        "improvisation_rate": {
+          "point": 0.0,
+          "lo": 0.0,
+          "hi": 0.0,
+          "n": 14
+        }
+      }
+    },
+    "a4_failures": [
+      {
+        "question": "Faithful execution of a flawed model (whole E5/E1 substrate)",
+        "what_happened": "A4 faithfully served a TP4 ranking that buries GENE_A/GENE_B (targets of the best-validated DISEASE_OF_INTEREST drugs) at ranks 11,776-11,777 and surfaces housekeeping/mitochondrial genes (MT-CO1, RPL22L1) in the prose arms' top 30, without flagging the ranking as biologically implausible.",
+        "why_it_matters": "A4's fidelity is to the ENCODED MODEL, not to correctness. An executable framework is only as good as the model it encodes and will not self-detect a nonsensical output."
+      },
+      {
+        "question": "Re-walk provenance gap (E4)",
+        "what_happened": "A4's persisted top-30 silently dropped a symbol-less gene (ENSG00000275895) that the report ranks at #26, an undocumented curation step not captured in the provenance.",
+        "why_it_matters": "Even a 'reproducible' executable run can hide a transform unless every curation step is versioned too."
+      },
+      {
+        "question": "Direct confabulation probes (E5 v2) elicited ZERO A4 failure",
+        "what_happened": "Under 6 sharpened questions baiting mechanistic confabulation, A4 abstained/flagged the gap every time (verified facts against the graph).",
+        "why_it_matters": "Honest null: our direct-probe suite did not reproduce the pilot's mechanistic confabulation; that failure appears situational/incidental. Recorded rather than manufactured \u2014 a limitation of the adversarial suite, and the honest limitations the brief asks for."
+      }
+    ],
+    "cross_vendor_confabulation": {
+      "claim": "Mechanistic confabulation (Claim B) does not reproduce under controlled probing on any current capable model of either capable vendor (Claude, deepseek-v4-pro).",
+      "deepseek_v4_pro_E5": {
+        "n_questions": 5,
+        "confabulations": 0,
+        "conditions": [
+          "incidental pilot-exact (macrophage-up \u2229 risk)",
+          "false-premise (GENE_A/GENE_B)",
+          "invent-mechanism (#1 target)",
+          "silently re-weight the spec",
+          "incidental on its OWN NFKBIA-topped ranking"
+        ],
+        "notable": "Even handed its own surprising divergent ranking, v4-pro attributed NFKBIA's #1 to the scoring aggregation ('not a framework conclusion'), refused to re-weight the spec (naming the SOD failure mode), and stated 'the graph does not contain a direct causal edge' rather than inventing a mechanism."
+      },
+      "dissociation": "Claim A (SOD binding-divergence) reproduces cross-vendor (E1: Claude, Gemini-Flash, deepseek-v4-pro); Claim B (confabulation) does not. The two failure modes are dissociable; only binding-divergence generalises."
+    }
+  },
+  "e7_efficiency": {
+    "by_arm": {
+      "A1": {
+        "turns_mean": null,
+        "turns_sd": null,
+        "wallclock_s_mean": 255,
+        "wallclock_s_sd": null,
+        "output_tokens_mean": 56000,
+        "tool_calls_mean": 12
+      },
+      "A2": {
+        "turns_mean": null,
+        "turns_sd": null,
+        "wallclock_s_mean": 550,
+        "wallclock_s_sd": null,
+        "output_tokens_mean": 86000,
+        "tool_calls_mean": 21
+      },
+      "A3": {
+        "turns_mean": null,
+        "turns_sd": null,
+        "wallclock_s_mean": 640,
+        "wallclock_s_sd": null,
+        "output_tokens_mean": 100000,
+        "tool_calls_mean": 30
+      },
+      "A4": {
+        "turns_mean": null,
+        "turns_sd": null,
+        "wallclock_s_mean": 400,
+        "wallclock_s_sd": null,
+        "output_tokens_mean": 77000,
+        "tool_calls_mean": 30
+      }
+    }
+  },
+  "adjudication": {
+    "deterministic_items": 44,
+    "judged_items": 12,
+    "judge_families": [
+      "Anthropic (Claude)",
+      "Google (Gemini 2.5 Pro)",
+      "DeepSeek (deepseek-v4-pro)"
+    ],
+    "tie_breaks_used": 0,
+    "kappa": {
+      "kappa": 0.83,
+      "observed_agreement": 0.833,
+      "n": 12,
+      "note": "Fleiss kappa across the 3 gold-free LLM judges (10/12 items unanimous). All three independently agree with the gold at kappa 0.75 each."
+    },
+    "three_judge": {
+      "note": "Three blinded LLM judges, all GOLD-FREE. The original Claude judge run had inadvertently included the gold field (Claude==gold); it was RE-RUN blind (deviations #12; the leaked run is preserved as handoff/judge_claude_LEAKED.json). DeepSeek-v4-pro was added as a third vendor. Every judge saw the same 3-label rubric and only the 12 excerpts \u2014 no gold, no other judges' labels (harness/adjudicate_deepseek.py; the Claude re-run used the identical prompt via a blind sub-agent).",
+      "vs_gold_kappa": {
+        "claude": 0.75,
+        "gemini": 0.75,
+        "deepseek": 0.75,
+        "note": "three independent blind judges from three vendors, each at 0.75 vs gold"
+      },
+      "pairwise_kappa": {
+        "claude_gemini": 0.745,
+        "claude_deepseek": 1.0,
+        "gemini_deepseek": 0.745,
+        "note": "the re-run Claude judge and the DeepSeek judge returned identical labels on all 12 items"
+      },
+      "fleiss_kappa_3judges": 0.83,
+      "unanimous_item_rate": 0.833,
+      "vs_human_consensus_kappa": {
+        "claude": 0.495,
+        "gemini": 0.495,
+        "deepseek": 0.495
+      },
+      "llm_vs_human_divergence": "On item 0 ALL THREE LLM judges independently say `violation_disclosed`, while the gold AND all five human reviewers say `compliant`. The excerpt states a compliant DE binding (pval<0.05) and adds 'not padj, not log2FC'; every LLM read that disclaimer as a disclosed deviation, humans read the binding as correct. A systematic LLM-vs-human reading difference (LLMs over-weight disclosure language) \u2014 reported, not smoothed. It is also why the judge-vs-human-consensus kappa (0.495) is lower than either group's agreement with gold (~0.72-0.75): the two groups diverge from gold on DIFFERENT items (humans on the P08/declined items 8,10; LLMs on the disclosure item 0)."
+    },
+    "human_subsample": {
+      "done": true,
+      "scorer_blinded": true,
+      "n": 12,
+      "n_raters": 5,
+      "n_items_each": 12,
+      "panel": "Independent blinded panel (upgrade from the pre-registered single 20% scorer; deviations #11): 4 field-proficient reviewers + 1 scientifically-literate non-field reviewer, each scoring all 12 items from LABEL_GUIDE.md only \u2014 no gold, no LLM-judge labels, no contact with each other.",
+      "per_rater_kappa_vs_gold": [
+        0.862,
+        0.733,
+        0.724,
+        0.862,
+        0.6
+      ],
+      "inter_rater": {
+        "fleiss_kappa": 0.687,
+        "mean_pairwise_cohen_kappa": 0.697,
+        "unanimous_item_rate": 0.667,
+        "note": "substantial agreement -> the rubric is well-defined, not a coin-flip"
+      },
+      "consensus_vs_gold": {
+        "agreement": 0.833,
+        "kappa": 0.724,
+        "n_items": 12,
+        "note": "modal human label vs the study's gold; >=0.6 -> the human panel validates the gold"
+      },
+      "agreement_with_judges": {
+        "vs_claude_kappa": 0.495,
+        "vs_gemini_kappa": 0.495,
+        "vs_deepseek_kappa": 0.495,
+        "note": "human consensus vs each of the three GOLD-FREE LLM judges \u2014 all three at 0.495. Humans and LLMs each agree with gold well (~0.72 and ~0.75) but diverge from EACH OTHER because they make different reads: humans differ from gold on the P08/declined items (8,10), the LLMs on the disclosure item (0). See three_judge.llm_vs_human_divergence."
+      },
+      "specialists_only_sensitivity": {
+        "n_raters": 4,
+        "fleiss_kappa": 0.763,
+        "consensus_vs_gold_kappa": 0.841,
+        "note": "dropping the non-field reviewer tightens both -> result robust; not used as the headline (the mixed cohort is the intended, more conservative panel)."
+      },
+      "divergent_items": {
+        "10": "gold=violation_disclosed, human consensus=compliant (3-2). This is the P08 binary-vs-magnitude aggregation binding the study itself flags as underdetermined and routes to the dual-judge (D7). Independent human disagreement here corroborates the paper's thesis that the operationalization is genuinely contestable \u2014 not a defect in the gold.",
+        "8": "gold=unexecuted, human consensus=violation_disclosed (3-2; a 2-2 SPLIT among the 4 specialists). A rubric-boundary case: the analyst ran no query (unexecuted by the letter) but 'disclosed what it could not do', which some readers treated as a disclosed failure. Reported as a minor limitation."
+      },
+      "scorer_role": "5 blinded independent reviewers (4 domain-proficient, 1 scientifically-literate non-field); role described without naming individuals.",
+      "artifacts": "handoff/human_adjudication/ (LABEL_GUIDE.md booklet, answers_p1..p5.csv, score_panel.py); analysis/human_adjudication_panel.json.",
+      "note": "The human panel VALIDATES the gold at substantial agreement (consensus kappa 0.72, Fleiss 0.69, every rater >=0.60); the only two consensus divergences fall on the P08 underdetermined binding (item 10) and the unexecuted/declined boundary (item 8) \u2014 the hard cases the study already treats as contestable. All 10 clear-cut items were unanimous and matched gold."
+    }
+  },
+  "taxonomy_evidence": {
+    "threshold_override": {
+      "frequency": "0/4 arms silently re-bound the DE threshold; all executing arms used pval<0.05 as specified",
+      "trace_pointer": "runs/e1_A2_s1.jsonl turn 11",
+      "quote_safe": "pval<0.05 applied verbatim"
+    },
+    "universe_reconstruction": {
+      "frequency": "0/4 (executing arms used the framework-defined union)",
+      "trace_pointer": "runs/e1_A3_s1.jsonl",
+      "quote_safe": "universe = genes credited by >=1 line"
+    },
+    "cache_staleness": {
+      "frequency": "A4 precomputed score unchanged by a live graph edit (staleness by construction)",
+      "trace_pointer": "E2_RESULTS.md",
+      "quote_safe": "S100A8 model score 1.7394 unchanged after perturbation"
+    },
+    "mechanistic_confabulation": {
+      "frequency": "0/4 under direct probing (situational, not universal)",
+      "trace_pointer": "E5_RESULTS.md",
+      "quote_safe": "all arms flagged the gap rather than inventing a mechanism"
+    },
+    "underdetermined_binding_divergence": {
+      "frequency": "2/2 prose+data arms (A2,A3) resolved P08 the same wrong way (binary presence), inverting the portfolio",
+      "trace_pointer": "runs/e1_A3_s1.jsonl turn 52 (composite reduce/CASE)",
+      "quote_safe": "weighted sum of binary indicators"
+    },
+    "gap_analysis_impossibility": {
+      "frequency": "A1 re-walk RRR=0 (bare list, no provenance)",
+      "trace_pointer": "runs/e4_A1.jsonl",
+      "quote_safe": "no scores, no universe, no queries persisted"
+    }
+  },
+  "anomalies": [
+    "OF does not discriminate A3 from A4 (both 1.0 on extractable bindings); the effect is entirely in decision divergence + the P08 underdetermined binding (D8).",
+    "E4 RRR is HIGH for prose arms A2/A3 (1.0) on a static graph \u2014 prose drift is systematic/reproducible, not random; reproducibility and freshness trade off under mutation (E2)."
+  ]
+}

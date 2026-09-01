@@ -1,0 +1,136 @@
+{
+  "model": "gemini-2.5-flash",
+  "sessions_available": {
+    "A1": [
+      "s1",
+      "s2",
+      "s3"
+    ],
+    "A2": [
+      "s1",
+      "s2",
+      "s3"
+    ],
+    "A3": [
+      "s1",
+      "s2",
+      "s3"
+    ],
+    "A4": [
+      "s1",
+      "s2",
+      "s3"
+    ]
+  },
+  "sessions_failed": {
+    "A1": [],
+    "A2": [],
+    "A3": [],
+    "A4": []
+  },
+  "decision_divergence": {
+    "A1": [
+      0.0,
+      0.0,
+      0.05263157894736842
+    ],
+    "A2": [
+      0.1111111111111111,
+      0.0,
+      0.0
+    ],
+    "A3": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "A2_vs_A3": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "compare_A4_A3_OF": {
+    "of_difference": 0.2272727272727273,
+    "ci95": [
+      0.125,
+      0.2857142857142857
+    ],
+    "excludes_zero": true
+  },
+  "p08_by_arm_seed": {
+    "A1": [
+      "unexecuted",
+      "unexecuted",
+      "unexecuted"
+    ],
+    "A2": [
+      "unexecuted",
+      "unexecuted",
+      "violation_silent"
+    ],
+    "A3": [
+      "unexecuted",
+      "violation_silent",
+      "unexecuted"
+    ],
+    "A4": [
+      "compliant",
+      "compliant",
+      "compliant"
+    ]
+  },
+  "of": {
+    "A2": {
+      "point": 0.9444444444444444,
+      "lo": 0.875,
+      "hi": 1.0,
+      "n": 30,
+      "note": "clustered on 3 sessions"
+    },
+    "A3": {
+      "point": 0.7727272727272727,
+      "lo": 0.7142857142857143,
+      "hi": 0.875,
+      "n": 30,
+      "note": "clustered on 3 sessions"
+    },
+    "A4": {
+      "point": 1.0,
+      "lo": 1.0,
+      "hi": 1.0,
+      "n": 30,
+      "note": "clustered on 3 sessions"
+    }
+  },
+  "stability": {
+    "A1": {
+      "kendall_tau_mean": 0.07142857142857144,
+      "kendall_tau_min": -0.21904761904761905,
+      "top10_jaccard_mean": 0.20697167755991286,
+      "top10_jaccard_min": 0.1111111111111111,
+      "n_pairs": 3
+    },
+    "A2": {
+      "kendall_tau_mean": NaN,
+      "kendall_tau_min": NaN,
+      "top10_jaccard_mean": 0.017543859649122806,
+      "top10_jaccard_min": 0.0,
+      "n_pairs": 3
+    },
+    "A3": {
+      "kendall_tau_mean": -0.3333333333333333,
+      "kendall_tau_min": -0.3333333333333333,
+      "top10_jaccard_mean": 0.0,
+      "top10_jaccard_min": 0.0,
+      "n_pairs": 3
+    },
+    "A4": {
+      "kendall_tau_mean": 1.0,
+      "kendall_tau_min": 1.0,
+      "top10_jaccard_mean": 1.0,
+      "top10_jaccard_min": 1.0,
+      "n_pairs": 3
+    }
+  }
+}

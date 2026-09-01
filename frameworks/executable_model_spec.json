@@ -1,0 +1,130 @@
+{
+  "name": "DISEASE_OF_INTEREST Target Prioritization 4",
+  "description": "Prioritizes top targets for DISEASE_OF_INTEREST. Deprioritize targets with safety liabilities and targets phase 3/4 clinical trials.",
+  "folder": null,
+  "anchorConcept": {
+    "dbLabel": "Gene",
+    "displayName": "Gene"
+  },
+  "returnsEntityType": {
+    "dbLabel": "Disease",
+    "displayName": "Disease"
+  },
+  "workflowStatus": "Succeeded",
+  "graphUpToDate": true,
+  "hasArchivedReports": false,
+  "evidenceLineCount": 13,
+  "categories": [
+    "Clinical Trials",
+    "Genetics",
+    "Pathway & Biological Processes",
+    "Safety Liabilities",
+    "scRNA"
+  ],
+  "evidenceLine": [
+    {
+      "name": "Gene is differentially expressed in dendritic cells",
+      "description": "Gene is differentially expressed in dendritic cells \n",
+      "category": "scRNA",
+      "weight": 0.9,
+      "cypher": "(c:`CellType`)<-[_r:`analyzes celltype`]-(d:`DifferentialExpressionDataset`)-[scoringAndUniqueNode:`differentially expresses`]->(conceptA:`Gene`)\n,(d)-[_r2:`studies condition`]->(conceptB:`Disease`)\nWHERE ((c.`displayName`='dendritic cell') AND (scoringAndUniqueNode.`pval`<0.05))",
+      "scoringNode": "differentially expresses"
+    },
+    {
+      "name": "Phase 3 or 4 clinical trial target",
+      "description": "Drug is targeted in phase 3 or 4 clinical trials ",
+      "category": "Clinical Trials",
+      "weight": -0.5,
+      "cypher": "(conceptB:`Disease`)<-[_r:`studies condition`]-(scoringAndUniqueNode:`ClinicalTrial`)-[_r2:`using the drug`]->(d:`Drug`)-[_r3:`acts on`]->(conceptA:`Gene`)\nWHERE ((scoringAndUniqueNode.`phase`>=3))",
+      "scoringNode": "ClinicalTrial"
+    },
+    {
+      "name": "Gene is differentially expressed in suprabasal keratinocyte cells",
+      "description": "Gene is differentially expressed in suprabasal keratinocyte cells",
+      "category": "scRNA",
+      "weight": 0.9,
+      "cypher": "(c:`CellType`)<-[_r:`analyzes celltype`]-(d:`DifferentialExpressionDataset`)-[scoringAndUniqueNode:`differentially expresses`]->(conceptA:`Gene`)\n,(d)-[_r2:`studies condition`]->(conceptB:`Disease`)\nWHERE ((c.`displayName`='suprabasal keratinocyte') AND (scoringAndUniqueNode.`pval`<0.05))",
+      "scoringNode": "differentially expresses"
+    },
+    {
+      "name": "Safety liability occurs when decreasing gene expression",
+      "description": "Safety liability occurs when decreasing gene expression",
+      "category": "Safety Liabilities",
+      "weight": -0.3,
+      "cypher": "(conceptB:`Disease`)<-[_r:`studies disease`]-(s:`ScDiffExpDataset`)-[_r2:`differentially expresses`]->(conceptA:`Gene`)<-[_r3:`occurs when decreasing`]-(scoringAndUniqueNode:`SafetyLiability`)",
+      "scoringNode": "SafetyLiability"
+    },
+    {
+      "name": "Phase 1 or 2 clinical trial uses a drug that acts on the gene ",
+      "description": "Phase 1 or 2 clinical trial uses a drug that acts on the gene ",
+      "category": "Clinical Trials",
+      "weight": 0.2,
+      "cypher": "(conceptB:`Disease`)<-[_r:`studies condition`]-(scoringAndUniqueNode:`ClinicalTrial`)-[_r2:`using the drug`]->(d:`Drug`)-[_r3:`acts on`]->(conceptA:`Gene`)\nWHERE ((scoringAndUniqueNode.`phase`>=1 AND scoringAndUniqueNode.`phase`<=2))",
+      "scoringNode": "ClinicalTrial"
+    },
+    {
+      "name": "Gene is differentially expressed in skin fibroblast cells",
+      "description": "Gene is differentially expressed in skin fibroblast cells",
+      "category": "scRNA",
+      "weight": 0.8,
+      "cypher": "(c:`CellType`)<-[_r:`analyzes celltype`]-(d:`DifferentialExpressionDataset`)-[scoringAndUniqueNode:`differentially expresses`]->(conceptA:`Gene`)\n,(d)-[_r2:`studies condition`]->(conceptB:`Disease`)\nWHERE ((c.`displayName`='skin fibroblast') AND (scoringAndUniqueNode.`pval`<0.05))",
+      "scoringNode": "differentially expresses"
+    },
+    {
+      "name": "Gene is differentially expressed in granular cells of epidermis",
+      "description": "Gene is differentially expressed in granular cells of epidermis\n",
+      "category": "scRNA",
+      "weight": 0.4,
+      "cypher": "(c:`CellType`)<-[_r:`analyzes celltype`]-(d:`DifferentialExpressionDataset`)-[scoringAndUniqueNode:`differentially expresses`]->(conceptA:`Gene`)\n,(d)-[_r2:`studies condition`]->(conceptB:`Disease`)\nWHERE ((c.`displayName`='granular cell of epidermis') AND (scoringAndUniqueNode.`pval`<0.05))",
+      "scoringNode": "scoringAndUniqueNode:differentially expresses"
+    },
+    {
+      "name": "Gene is differentially expressed in natural killer cells",
+      "description": "Gene is differentially expressed in natural killer cells\n",
+      "category": "scRNA",
+      "weight": 0.6,
+      "cypher": "(c:`CellType`)<-[_r:`analyzes celltype`]-(d:`DifferentialExpressionDataset`)-[scoringAndUniqueNode:`differentially expresses`]->(conceptA:`Gene`)\n,(d)-[_r2:`studies condition`]->(conceptB:`Disease`)\nWHERE ((c.`displayName`='natural killer cell') AND (scoringAndUniqueNode.`pval`<0.05))",
+      "scoringNode": "scoringAndUniqueNode:differentially expresses"
+    },
+    {
+      "name": "Gene is differentially expressed in macrophage cells",
+      "description": "Gene is differentially expressed in macrophage cells \n",
+      "category": "scRNA",
+      "weight": 0.5,
+      "cypher": "(c:`CellType`)<-[_r:`analyzes celltype`]-(d:`DifferentialExpressionDataset`)-[scoringAndUniqueNode:`differentially expresses`]->(conceptA:`Gene`)\n,(d)-[_r2:`studies condition`]->(conceptB:`Disease`)\nWHERE ((c.`displayName`='macrophage') AND (scoringAndUniqueNode.`pval`<0.05))",
+      "scoringNode": "differentially expresses"
+    },
+    {
+      "name": "Gene is differentially expressed in hair follicular keratinocyte cells",
+      "description": "Gene is differentially expressed in hair follicular keratinocyte cells\n",
+      "category": "scRNA",
+      "weight": 1,
+      "cypher": "(c:`CellType`)<-[_r:`analyzes celltype`]-(d:`DifferentialExpressionDataset`)-[scoringAndUniqueNode:`differentially expresses`]->(conceptA:`Gene`)\n,(d)-[_r2:`studies condition`]->(conceptB:`Disease`)\nWHERE ((c.`displayName`='hair follicular keratinocyte') AND (scoringAndUniqueNode.`pval`<0.05))",
+      "scoringNode": "differentially expresses"
+    },
+    {
+      "name": "Open Targets Genetics Association at risk for disease",
+      "description": "Gene has an OpenTargets Genetic Association at risk for the disease",
+      "category": "Genetics",
+      "weight": 1,
+      "cypher": "(conceptA:`Gene`)<-[_r:`has association`]-(scoringAndUniqueNode:`VariantAssociation`)-[_r2:`risk of trait`]->(conceptB:`Disease`)",
+      "scoringNode": "VariantAssociation"
+    },
+    {
+      "name": "Gene is involved in interleukin 23 signalling",
+      "description": "Gene is involved in interleukin 23 signalling R-HSA-9020933\n",
+      "category": "Pathway & Biological Processes",
+      "weight": 0.2,
+      "cypher": "(p:`Pathway`)<-[scoringAndUniqueNode:`participates in`]-(conceptA:`Gene`)<-[_r:`differentially expresses`]-(d:`DifferentialExpressionDataset`)-[_r2:`studies condition`]->(conceptB:`Disease`)\nWHERE ((p.`displayName`='Interleukin-23 signaling'))",
+      "scoringNode": "participates in"
+    },
+    {
+      "name": "Gene is involved in Interferon Signalling pathway",
+      "description": "Gene is involved in Interferon Signalling pathway REACT_25229\n",
+      "category": "Pathway & Biological Processes",
+      "weight": 0.2,
+      "cypher": "(p:`Pathway`)<-[scoringAndUniqueNode:`participates in`]-(conceptA:`Gene`)<-[_r:`differentially expresses`]-(d:`DifferentialExpressionDataset`)-[_r2:`studies condition`]->(conceptB:`Disease`)\nWHERE ((p.`displayName`='Interferon Signaling'))",
+      "scoringNode": "participates in"
+    }
+  ]
+}

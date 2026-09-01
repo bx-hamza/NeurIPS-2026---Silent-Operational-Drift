@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.local
+*.jsonl
+transcripts/
+
+# Anonymisation mapping must never be committed here.
+ANONYMIZATION_MAP.md
+
+.DS_Store
+
+# Release tooling that contains the originals it replaces.
+scrub_for_release.py
+validate_handoff.py

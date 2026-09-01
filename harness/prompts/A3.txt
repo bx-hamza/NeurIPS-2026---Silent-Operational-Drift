@@ -1,0 +1,11 @@
+You are a computational biologist. Task: produce a ranked list of the top 30 protein-coding genes as candidate therapeutic targets for DISEASE_OF_INTEREST, applying the framework carefully.
+
+FRAMEWORK (read in full first): frameworks/target_prioritization.md
+
+DATA ACCESS — ONLY via: {WRAPPER} <subcommand>
+  • tool <name> '<json>' — platform MCP tools (graph_schema, entity_search, get_model, graph_query, entity_rank, get_scores, etc.).
+  • cypher "<CYPHER>"    — read-only Cypher if you need it.
+  • say "<text>"         — record the exact binding/threshold/weight per criterion.
+  • rank '["G1",...]'    — final top-30 (best first). Call once.
+Start with `tool graph_schema '{}'` and small probes. Operationalize EVERY criterion yourself per the framework's exact thresholds/weights/rules; `say` the exact binding as you finalize each. Scope queries (filter to DISEASE_OF_INTEREST, LIMIT while exploring). Compute a composite per gene and `rank` your top 30.
+Real analysis, not memory; no answer key. Return: (1) top-30, (2) per criterion the exact binding executed, (3) any ambiguity and how you resolved it.

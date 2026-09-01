@@ -1,0 +1,85 @@
+{
+  "n_real": 14,
+  "n_null": 10,
+  "live_reference_tracked": "14/14",
+  "reverts_ok": "24/24",
+  "A4_stale_on_real": "14/14",
+  "A3": {
+    "dssm": {
+      "detection_rate": {
+        "point": 1.0,
+        "lo": 1.0,
+        "hi": 1.0,
+        "n": 14,
+        "note": "clustered on 14 sessions"
+      },
+      "staleness_rate": {
+        "point": 0.0,
+        "lo": 0.0,
+        "hi": 0.0,
+        "n": 14,
+        "note": "clustered on 14 sessions"
+      },
+      "false_drift_rate": {
+        "point": 0.0,
+        "lo": 0.0,
+        "hi": 0.0,
+        "n": 10,
+        "note": "clustered on 10 sessions | CONTROL: detection is only meaningful relative to this"
+      }
+    },
+    "fisher": {
+      "odds_ratio": Infinity,
+      "p_value": 5.0987734390615e-07,
+      "table": [
+        [
+          14,
+          0
+        ],
+        [
+          0,
+          10
+        ]
+      ]
+    }
+  },
+  "A4": {
+    "dssm": {
+      "detection_rate": {
+        "point": 0.0,
+        "lo": 0.0,
+        "hi": 0.0,
+        "n": 14,
+        "note": "clustered on 14 sessions"
+      },
+      "staleness_rate": {
+        "point": 1.0,
+        "lo": 1.0,
+        "hi": 1.0,
+        "n": 14,
+        "note": "clustered on 14 sessions"
+      },
+      "false_drift_rate": {
+        "point": 0.0,
+        "lo": 0.0,
+        "hi": 0.0,
+        "n": 10,
+        "note": "clustered on 10 sessions | CONTROL: detection is only meaningful relative to this"
+      }
+    },
+    "fisher": {
+      "odds_ratio": NaN,
+      "p_value": 1.0,
+      "table": [
+        [
+          0,
+          14
+        ],
+        [
+          0,
+          10
+        ]
+      ]
+    }
+  }
+}

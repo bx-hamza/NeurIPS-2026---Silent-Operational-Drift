@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.local
+*.jsonl
+transcripts/
+
+# Anonymisation mapping must never be committed here.
+ANONYMIZATION_MAP.md
+
+.DS_Store

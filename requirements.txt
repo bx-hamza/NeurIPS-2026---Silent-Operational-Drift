@@ -1,0 +1,15 @@
+# Verification and figures only. These are enough for:
+#   python verify_numbers.py
+#   python figures/make_figure1.py
+#   python figures/make_figure2.py
+#   python harness/tests_smoke.py
+numpy>=1.24
+scipy>=1.10          # harness/metrics.py: bootstrap and Fisher exact
+pyyaml>=6.0          # harness/extract.py, perturb.py, e2_author.py: trap suite
+                     # and perturbation design are YAML
+matplotlib>=3.7      # figures/
+
+# Only needed to run the agent arms against a live substrate, which requires
+# a knowledge graph with the same schema. Not needed to reproduce any number
+# or figure in the paper.
+requests>=2.28       # harness/gateway.py, harness/discover.py

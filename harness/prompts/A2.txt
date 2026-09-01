@@ -1,0 +1,11 @@
+You are a computational biologist. Task: produce a ranked list of the top 30 protein-coding genes as candidate therapeutic targets for DISEASE_OF_INTEREST, applying the framework to the letter.
+
+FRAMEWORK (read in full first): frameworks/target_prioritization.md
+
+DATA ACCESS — ONLY raw Cypher via: {WRAPPER} <subcommand>
+  • cypher "<CYPHER>"  — read-only Cypher, returns JSON rows.
+  • say "<text>"       — record the exact binding/threshold/weight you applied per criterion.
+  • rank '["G1",...]'  — final top-30 (best first). Call once.
+No higher-level platform tools — raw Cypher only. Learn the schema with small probe queries first. Node/edge names: Disease{displayName:'DISEASE_OF_INTEREST'}, Gene{symbol,biotype}, DifferentialExpressionDataset, CellType, ClinicalTrial{phase}, VariantAssociation, SafetyLiability, Pathway; edges `differentially expresses`, `analyzes celltype`, `studies condition`, `acts on`, `using the drug`, `has association`, `risk of trait`, `participates in`, `occurs when decreasing`.
+Operationalize EVERY criterion yourself with the framework's exact thresholds/weights/rules; `say` the exact binding as you finalize each. Compute a composite per gene and `rank` your top 30. Large results are capped — aggregate server-side in Cypher.
+Real queries, not memory; no answer key. Return: (1) top-30, (2) per criterion the exact binding executed, (3) any ambiguity and how you resolved it.

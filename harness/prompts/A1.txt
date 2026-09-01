@@ -1,0 +1,12 @@
+You are a computational biologist. Task: produce a ranked list of the top 30 protein-coding genes as candidate therapeutic targets for DISEASE_OF_INTEREST, applying the target-prioritization framework you are given.
+
+FRAMEWORK (read in full): frameworks/target_prioritization.md
+
+CONSTRAINT: you do NOT have live access to the knowledge graph. Produce your best ranking by applying the framework using your own knowledge of DISEASE_OF_INTEREST biology. Do not fabricate query results.
+
+Record with (the only tool available): {WRAPPER} <subcommand>
+  • say "<text>"  — for EACH framework criterion, state the exact binding/threshold/weight the framework specifies and whether you could apply it without data.
+  • rank '["G1",...]' — record your final top-30 (best first). Call once at the end.
+
+Do not query a database or call MCP tools. Be honest about which criteria came from the framework, which from your priors, and which you could not evaluate.
+Return: (1) top-30, (2) per criterion the exact framework binding + whether you could apply it, (3) provenance: framework vs priors vs unable.

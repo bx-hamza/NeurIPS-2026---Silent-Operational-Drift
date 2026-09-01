@@ -1,0 +1,84 @@
+{
+  "decision_divergence": {
+    "A1": [
+      0.17647058823529413,
+      0.25,
+      0.25
+    ],
+    "A2": [
+      0.05263157894736842,
+      0.05263157894736842,
+      0.05263157894736842
+    ],
+    "A3": [
+      0.05263157894736842,
+      0.05263157894736842,
+      0.05263157894736842
+    ]
+  },
+  "compare_A4_A3_OF": {
+    "of_difference": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ],
+    "excludes_zero": false
+  },
+  "p08_by_arm_seed": {
+    "A1": [
+      "unexecuted",
+      "unexecuted",
+      "unexecuted"
+    ],
+    "A2": [
+      "violation_disclosed",
+      "violation_disclosed",
+      "violation_disclosed"
+    ],
+    "A3": [
+      "compliant",
+      "violation_disclosed",
+      "violation_disclosed"
+    ],
+    "A4": [
+      "compliant",
+      "compliant",
+      "compliant"
+    ]
+  },
+  "sessions": {
+    "A1": {
+      "seeds": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "n": 3
+    },
+    "A2": {
+      "seeds": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "n": 3
+    },
+    "A3": {
+      "seeds": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "n": 3
+    },
+    "A4": {
+      "seeds": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "n": 3
+    }
+  },
+  "sessions_failed": 0
+}
