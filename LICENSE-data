@@ -1,0 +1,53 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright 2026 The Authors
+
+The data and documentation in this repository are licensed under the Creative
+Commons Attribution 4.0 International License.
+
+Full legal code:  https://creativecommons.org/licenses/by/4.0/legalcode
+Human-readable summary:  https://creativecommons.org/licenses/by/4.0/
+
+SPDX-License-Identifier: CC-BY-4.0
+
+You are free to share and adapt this material for any purpose, including
+commercially, provided you give appropriate credit, link to the license, and
+indicate whether changes were made.
+
+
+What this covers
+----------------
+
+  data/            scored results (HANDOFF.json)
+  analysis/        derived analysis outputs
+  adjudication/    judge runs, blinded items, panel protocol and ratings
+  docs/            protocol, pre-registration record, deviations, manifest
+  frameworks/      the two framework representations under test
+  traps/           the trap suite
+  perturbations/   the E2 perturbation and null-control design
+
+Source code in this repository, principally harness/, figures/,
+verify_numbers.py and audit_staleness.py, is licensed under the Apache
+License 2.0 instead. See LICENSE and NOTICE.
+
+
+What this does not cover
+------------------------
+
+The biomedical knowledge graph the study runs against is a third-party
+production system. It is neither owned nor redistributed by the authors, and
+nothing here grants any right to it. What is released is the queries issued
+against it, the bindings extracted from those queries, and the agent-free
+reference composites.
+
+Third-party model outputs recorded in adjudication/ and analysis/ were
+produced by commercial language models under their respective providers'
+terms.
+
+
+Attribution
+-----------
+
+Until acceptance the copyright holder is given as "The Authors" because this
+repository accompanies a double-blind submission. Cite the paper rather than
+the repository; see CITATION.cff.

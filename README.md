@@ -110,5 +110,8 @@ one is posted.
 
 ## Licence
 
-Code under Apache-2.0 (`LICENSE`). Data and documentation under CC BY 4.0
-(`LICENSE-data`).
+Code under Apache-2.0 (`LICENSE`, with attribution in `NOTICE`). Data and
+documentation under CC BY 4.0 (`LICENSE-data`), which also states what the
+release does not cover. The copyright holder is given as "The Authors"
+while the submission is under double-blind review and will be replaced with
+the named authors on acceptance.
